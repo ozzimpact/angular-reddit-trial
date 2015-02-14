@@ -44,6 +44,9 @@ app.config(function ($routeProvider) {
           return Auth.resolveUser();
         }
       }
+    }).when('/users/:userId', {
+      templateUrl: 'views/profile.html',
+      controller: 'ProfileCtrl'
     })
     .otherwise({
       redirectTo: '/'

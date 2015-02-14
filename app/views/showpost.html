@@ -1,6 +1,56 @@
-<div>
-  <a ng-href="{{ post.url }}">{{ post.title }}</a>
+<div class="container posts-page">
+
+  <div class="post row">
+    <div class="col-xs-1">
+    </div>
+    <div class="col-md-9 col-xs-11">
+      <div class="info">
+        <a ng-href="{{ post.url }}">
+          {{ post.title }}
+          <span class="url">({{ post.url | hostnameFromUrl }})</span>
+        </a>
+      </div>
+      <div>
+        <span>
+          submitted by
+          <a ng-href="#/users/{{ post.creatorUID }}">
+            {{ post.creator }}
+          </a>
+        </span>
+      </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+  </div>
+
+  <div ng-repeat="comment in comments" class="row cmt">
+    <div class="col-md-12">
+      <p>{{ comment.text }}</p>
+      <p class="author">posted by
+        <a ng-href="#/users/{{ comment.creatorUID }}">
+          {{ comment.creator }}
+        </a>
+        <a ng-href=""
+           ng-click="deleteComment(comment)"
+           ng-show="signedIn() && comment.creatorUID === user.uid || user.uid === post.creatorUID">
+          (delete)
+        </a>
+      </p>
+    </div>
+  </div>
+
+  <div class="cmt-form">
+    <div ng-hide="signedIn()">
+      <p><a href="#/login">Sign in</a> to post a comment</p>
+    </div>
+
+    <div ng-show="signedIn()">
+      <input type="text"
+        ng-model="commentText"
+        placeholder="Post a Comment"
+        class="form-control"/><br />
+      <button type="button" class="btn btn-primary" ng-click="addComment()">Post Comment</button>
+    </div>
+  </div>
 
 </div>
-
-<a ng-href="#/posts">Back to Posts</a>
